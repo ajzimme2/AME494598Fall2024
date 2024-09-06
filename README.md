@@ -1,1 +1,2 @@
-# AME494598Fall2024
+# Aiden Zimmer
+# 1222267839
