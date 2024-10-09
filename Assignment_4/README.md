@@ -1,1 +1,2 @@
-#H Simple Resume + Hosting Picture
+# H1 Simple Resume + Hosting Picture
+![Image](Image.JPG)
