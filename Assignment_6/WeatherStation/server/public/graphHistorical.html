@@ -10,6 +10,7 @@
 <script>
 var chart;
 var lastAddedTS = 0;
+var timeSelect = document.getElementById('duration').value
 function getDataFromServer()
 {
 	var url = "./getLatest"
@@ -34,7 +35,7 @@ function getDataFromServer()
 }
 function getTSInFormat(t)
 {
-	var x = new Date(t-value);
+	var x = new Date(t);
 	return x.getFullYear() + "-" + (x.getMonth()+1) + "-" + x.getDate() + "T" + x.getHours() + ":" + x.getMinutes() + ":" + x.getSeconds();
 }
 function start(){
@@ -91,6 +92,8 @@ function start(){
 		<option value='60'> last hour </option>
 	</select>
 	<div id='data'></div>
+
+	<h2> selected time is <script> document.write(timeSelect) </script> </h2>
 
 </body>
 </html>
