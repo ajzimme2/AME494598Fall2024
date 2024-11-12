@@ -34,7 +34,7 @@ function getDataFromServer()
 }
 function getTSInFormat(t)
 {
-	var x = new Date(t);
+	var x = new Date(t-value);
 	return x.getFullYear() + "-" + (x.getMonth()+1) + "-" + x.getDate() + "T" + x.getHours() + ":" + x.getMinutes() + ":" + x.getSeconds();
 }
 function start(){
