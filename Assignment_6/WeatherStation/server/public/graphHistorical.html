@@ -10,7 +10,7 @@
 <script>
 var chart;
 var lastAddedTS = 0;
-var timeSelect = document.getElementById('duration')
+var timeSelect = document.getElementById('duration').value;
 function getDataFromServer()
 {
 	var url = "./getLatest"
@@ -23,7 +23,7 @@ function getDataFromServer()
 				columns[0].push(getTSInFormat(timestamp));
 				columns[1].push(obj[i].t || 0);
 				columns[2].push(obj[i].h || 0);
-				lastAddedTS = timestamp;
+				lastAddedTS = timestamp-timeSelect;
 			}
 		}
 
