@@ -26,7 +26,8 @@ function getDataFromServer()
 				columns[0].push(getTSInFormat(timestamp));
 				columns[1].push(obj[i].t || 0);
 				columns[2].push(obj[i].h || 0);
-				lastAddedTS = timestamp-10;
+				columns[3].push(obj[i].h || 0);
+				lastAddedTS = timestamp;
 			}
 		}
 
