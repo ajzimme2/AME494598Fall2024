@@ -10,7 +10,10 @@
 <script>
 var chart;
 var lastAddedTS = 0;
-var timeSelect = document.getElementById('duration').text;
+var timeSelect = document.querySelector('duration').value;
+function timeSelection(g){
+	timeSelect=g;
+}
 function getDataFromServer()
 {
 	var url = "./getLatest"
@@ -86,8 +89,8 @@ function start(){
 	<h1> Weather Historical Data </h1>
 
 	<input id='datetimeSelect' type='text'>
-	<select id='duration'>
-		<option value='10'> last 10 mins </option>
+	<select onchange="timeSelection(timeSelect.value);" id='duration'>
+		<option value='10' selected="selected" > last 10 mins </option>
 		<option value='30'> last 30 mins </option>
 		<option value='60'> last hour </option>
 	</select>
