@@ -9,11 +9,8 @@
 <script src='asyncReq.js'></script>
 <script>
 var chart;
-var lastAddedTS = 0;
-var timeSelect = document.querySelector('duration').value;
-function timeSelection(g){
-	timeSelect=g;
-}
+var lastAddedTS = 10;
+var timeSelect = 0;
 function getDataFromServer()
 {
 	var url = "./getLatest"
@@ -89,14 +86,14 @@ function start(){
 	<h1> Weather Historical Data </h1>
 
 	<input id='datetimeSelect' type='text'>
-	<select onchange="timeSelection(timeSelect.value);" id='duration'>
+	<select id='duration'>
 		<option value='10' selected="selected" > last 10 mins </option>
 		<option value='30'> last 30 mins </option>
 		<option value='60'> last hour </option>
 	</select>
 	<div id='data'></div>
 
-	<h2> selected time is <script> document.write(timeSelect) </script> </h2>
+	<h2> selected time is <script> document.write(document.getElementById('duration')) </script> </h2>
 
 </body>
 </html>
