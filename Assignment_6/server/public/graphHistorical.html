@@ -38,8 +38,7 @@ function getTSInFormat(t)
 	return x.getFullYear() + "-" + (x.getMonth()+1) + "-" + x.getDate() + "T" + x.getHours() + ":" + x.getMinutes() + ":" + x.getSeconds();
 }
 function start(){
-	flatpickr("#datetimeSelect", { enableTime: true,
-    dateFormat: "Y-m-d H:i"});
+	flatpickr("#datetimeSelect", { enableTime: true, dateFormat: "Y-m-d H:i"});
 
 	var url = "./getLatest";
 	var callback = function(data){
@@ -68,11 +67,7 @@ function start(){
         }
     	}
 		});
-
-
-	}
-	loadFile(url, callback);
-
+		
 	document.getElementById("data").addEventListener("click", function() {
 		//Get the selected start time and duration
 		const selectedStartTime = document.getElementById("datetimeSelect")._flatpickr("#datetimeSelect", { enableTime: true, dateFormat: "Y-m-d H:i"});
@@ -81,6 +76,10 @@ function start(){
 			getDataFromServer(selectedStartTime, duration);
 		}
 	});
+
+	}
+	loadFile(url, callback);
+
 }
 
 
