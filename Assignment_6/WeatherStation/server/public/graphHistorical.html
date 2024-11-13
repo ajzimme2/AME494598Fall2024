@@ -9,8 +9,8 @@
 <script src='asyncReq.js'></script>
 <script>
 var chart;
-var lastAddedTS = 10;
-var timeSelect = 0;
+var lastAddedTS = 0;
+
 function getDataFromServer()
 {
 	var url = "./getLatest"
@@ -51,7 +51,7 @@ function start(){
 			columns[0].push(getTSInFormat(timestamp));
 			columns[1].push(obj[i].t || 0);
 			columns[2].push(obj[i].h || 0);
-			lastAddedTS = timestamp;
+			lastAddedTS = 0;
 		}
 		chart = c3.generate({
     	bindto: '#data',
@@ -93,7 +93,7 @@ function start(){
 	</select>
 	<div id='data'></div>
 
-	<h2> selected time is <script> document.write(document.getElementById('duration')) </script> </h2>
+	<h2> selected time is <script> document.write(lastAddedTS) </script> </h2>
 
 </body>
 </html>
