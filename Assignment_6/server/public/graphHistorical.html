@@ -73,8 +73,14 @@ function start(){
 	}
 	loadFile(url, callback);
 
-
-	setInterval("getDataFromServer()", 1000);
+	document.getElementById("data").addEventListener("click", function() {
+		//Get the selected start time and duration
+		const selectedStartTime = document.getElementById("datetimeSelect")._flatpickr("#datetimeSelect", { enableTime: true, dateFormat: "Y-m-d H:i"});
+		const duration = parseInt(document.getElementById("duration").value)
+		if(selectedStartTime && duration) {
+			getDataFromServer(selectedStartTime, duration);
+		}
+	});
 }
 
 
