@@ -14,8 +14,10 @@ var duration = 10;  // Default duration (in minutes)
 
 function getDataFromServer(startTime, duration)
 {
-	var url = "./getData?start=" + startTime + "&duration=" + duration;  // Updated endpoint for fetching data
+	var url = "./getData?start=" + startTime + "&duration=" + duration;  // Assuming your server can handle these query parameters
+    console.log("Fetching data with URL:", url);  // Debugging log
 	var callback = function(data){
+        console.log("Data received from server:", data);  // Debugging log
 		var obj = JSON.parse(data);
 		var columns = [["x"],["Temperature"],["Humidity"]];
 		for(var i = 0; i < obj.length; i++){
@@ -26,12 +28,11 @@ function getDataFromServer(startTime, duration)
 			lastAddedTS = timestamp;
 		}
 
-		// Use flow to update the chart with new data
-		chart.flow({
+		chart.load({
 			columns: columns
 		});
 	}
-	loadFile(url, callback);
+	loadFile(url, callback);  // This should call the backend with the URL
 }
 
 function getTSInFormat(t)
@@ -73,11 +74,10 @@ function start(){
 	}
 
 	loadFile(url, callback);
-	
-	
+
 	setInterval(function() {
-		getDataFromServer(lastAddedTS, duration);  // Use the selected duration in the interval
-	}, 6000);  // Fetch data every minute (adjust this interval as needed)
+		getDataFromServer(lastAddedTS, duration);  // Use lastAddedTS and duration
+	}, 6000);  // Update every minute (adjust as necessary)
 }
 
 document.getElementById("data").addEventListener("click", function() {
@@ -87,7 +87,8 @@ document.getElementById("data").addEventListener("click", function() {
 	if(selectedStartTime && duration) {
 		// Convert selected start time to timestamp (in seconds)
 		const startTime = selectedStartTime.getTime() / 1000;  // Convert to seconds
-		getDataFromServer(startTime, duration);
+		console.log("Selected Start Time:", startTime);  // Debugging log
+		getDataFromServer(startTime, duration);  // Fetch and update the chart
 	}
 });
 
