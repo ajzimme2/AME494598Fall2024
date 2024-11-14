@@ -81,15 +81,15 @@ function start(){
 }
 
 document.getElementById("data").addEventListener("click", function() {
-	// Get the selected start time and duration
-	const selectedStartTime = document.getElementById("datetimeSelect")._flatpickr.selectedDates[0];  // Get the first selected date
-	duration = parseInt(document.getElementById("duration").value);  // Update global duration based on the dropdown selection
-	if(selectedStartTime && duration) {
-		// Convert selected start time to timestamp (in seconds)
-		const startTime = selectedStartTime.getTime() / 1000;  // Convert to seconds
-		console.log("Selected Start Time:", startTime);  // Debugging log
-		getDataFromServer(startTime, duration);  // Fetch and update the chart
-	}
+    const selectedStartTime = document.getElementById("datetimeSelect")._flatpickr.selectedDates[0];  // Get the first selected date
+    duration = parseInt(document.getElementById("duration").value);  // Update global duration based on the dropdown selection 
+    console.log("Selected Start Time:", selectedStartTime);  // Log selected time
+    console.log("Selected Duration:", duration);  // Log selected duration 
+    if(selectedStartTime && duration) {
+        const startTime = selectedStartTime.getTime() / 1000;  // Convert to seconds
+        console.log("Converted Start Time (in seconds):", startTime);  // Debugging log
+        getDataFromServer(startTime, duration);  // Fetch and update the chart
+    }
 });
 
 </script>

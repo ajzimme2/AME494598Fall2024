@@ -49,23 +49,23 @@ app.get("/getLatest", function (req, res) {
 });
 
 app.get("/getData", function (req, res) {
-  // Get start time and duration from query parameters
   var from = parseInt(req.query.start);
-  var duration = parseInt(req.query.duration);  // duration in minutes
-  
+  var duration = parseInt(req.query.duration);
+
   if (isNaN(from) || isNaN(duration)) {
     return res.status(400).send('Invalid start time or duration');
   }
 
-  // Calculate the end time (in milliseconds)
-  var to = from + duration * 60 * 1000; // Convert duration from minutes to milliseconds
+  var to = from + duration * 60 * 1000;  // Convert duration to milliseconds
 
-  // Fetch data from MongoDB where time is between `from` and `to`
+  console.log("Fetching data from", from, "to", to);  // Log for debugging
+
   (async function() {
     let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
     let db = client.db('sensorData');
     try {
       let result = await db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time: -1}).toArray();
+      console.log("Data sent to frontend:", result);  // Log for debugging
       res.send(JSON.stringify(result));
     }
     finally {
