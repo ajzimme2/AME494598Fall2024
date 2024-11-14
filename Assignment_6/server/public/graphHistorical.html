@@ -75,7 +75,7 @@ function start(){
 	// Update data at a reasonable interval (e.g., every minute)
 	setInterval(function() {
 		getDataFromServer(lastAddedTS, 10);  // Adjust duration and pass the last timestamp for continuous updates
-	}, 60000);  // Every minute, you can adjust this interval
+	}, 10000);  // Every minute, you can adjust this interval
 }
 
 document.getElementById("data").addEventListener("click", function() {
