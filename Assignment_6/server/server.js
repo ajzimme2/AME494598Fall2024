@@ -51,33 +51,29 @@ app.get("/getLatest", function (req, res) {
 app.get("/getData", function (req, res) {
   // Get start time and duration from query parameters
   var from = parseInt(req.query.start);
-  var duration = parseInt(req.query.duration);  // duration in minutes
-
-  if (isNaN(from) || isNaN(duration)) {
-      return res.status(400).send('Invalid start time or duration');
-  }
-
-  // Calculate the end time (in milliseconds)
-  var to = from + duration * 60 * 1000; // Convert duration from minutes to milliseconds
-
-  console.log(`Fetching data from ${from} to ${to}`);  // Log start and end time for debugging
-
-  // Fetch data from MongoDB where time is between `from` and `to`
+  var duration = parseInt(req.query.duration);
+  var to = from + duration * 60 * 1000;
+  
+  // Fetch data from MongoDB
   (async function() {
       let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
       let db = client.db('sensorData');
       try {
-          let result = await db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time: -1}).toArray();
-          console.log("Data sent to frontend:", result);  // Log result for debugging
+          let result = await db.collection("data").find({ time: { $gt: from, $lt: to } }).sort({ time: -1 }).toArray();
+  
+          if (result.length < (duration * 60)) {
+              res.status(400).send("Not enough data available for the requested duration.");
+              return;
+          }
+  
           res.send(JSON.stringify(result));
-      }
-      finally {
+      } finally {
           client.close();
       }
   })().catch(err => {
       console.error(err);
-      res.status(500).send('Internal server error');
-  });
+      res.status(500).send("Internal server error");
+  });  
 });
 
 
