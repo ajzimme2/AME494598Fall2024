@@ -27,7 +27,8 @@
                 columns[2].push(obj[i].h || 0);
                 lastAddedTS = timestamp;
             }
-
+			
+			console.log("Columns to load into chart:", columns);  // Debugging log for columns data
             chart.load({
                 columns: columns
             });
@@ -35,10 +36,14 @@
         loadFile(url, callback);  // This should call the backend with the URL
     }
 
-    function getTSInFormat(t) {
-        var x = new Date(t);
-        return x.getFullYear() + "-" + (x.getMonth() + 1) + "-" + x.getDate() + "T" + x.getHours() + ":" + x.getMinutes() + ":" + x.getSeconds();
-    }
+	function getTSInFormat(t) {
+    var x = new Date(t); // Make sure we're passing the correct timestamp (in milliseconds)
+    // Add leading zeros to hours, minutes, and seconds for consistency
+    return x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + "-" + x.getDate().toString().padStart(2, '0') + "T" +
+        x.getHours().toString().padStart(2, '0') + ":" +
+        x.getMinutes().toString().padStart(2, '0') + ":" +
+        x.getSeconds().toString().padStart(2, '0');
+}
 
     function start() {
         flatpickr("#datetimeSelect", { enableTime: true, dateFormat: "Y-m-d H:i" });
