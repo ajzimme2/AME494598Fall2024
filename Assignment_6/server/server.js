@@ -49,31 +49,34 @@ app.get("/getLatest", function (req, res) {
 });
 
 app.get("/getData", function (req, res) {
+  // Get start time and duration from query parameters
   var from = parseInt(req.query.start);
-  var duration = parseInt(req.query.duration);
+  var duration = parseInt(req.query.duration);  // duration in minutes
 
   if (isNaN(from) || isNaN(duration)) {
-    return res.status(400).send('Invalid start time or duration');
+      return res.status(400).send('Invalid start time or duration');
   }
 
-  var to = from + duration * 60 * 1000;  // Convert duration to milliseconds
+  // Calculate the end time (in milliseconds)
+  var to = from + duration * 60 * 1000; // Convert duration from minutes to milliseconds
 
-  console.log("Fetching data from", from, "to", to);  // Log for debugging
+  console.log(`Fetching data from ${from} to ${to}`);  // Log start and end time for debugging
 
+  // Fetch data from MongoDB where time is between `from` and `to`
   (async function() {
-    let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
-    let db = client.db('sensorData');
-    try {
-      let result = await db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time: -1}).toArray();
-      console.log("Data sent to frontend:", result);  // Log for debugging
-      res.send(JSON.stringify(result));
-    }
-    finally {
-      client.close();
-    }
+      let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
+      let db = client.db('sensorData');
+      try {
+          let result = await db.collection("data").find({time:{$gt:from, $lt:to}}).sort({time: -1}).toArray();
+          console.log("Data sent to frontend:", result);  // Log result for debugging
+          res.send(JSON.stringify(result));
+      }
+      finally {
+          client.close();
+      }
   })().catch(err => {
-    console.error(err);
-    res.status(500).send('Internal server error');
+      console.error(err);
+      res.status(500).send('Internal server error');
   });
 });
 
