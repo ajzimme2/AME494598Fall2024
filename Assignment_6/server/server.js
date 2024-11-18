@@ -49,15 +49,13 @@ app.get("/getLatest", function (req, res) {
 });
 
 app.get("/getData", function (req, res) {
-  // Get start time and duration from query parameters
   var from = parseInt(req.query.start);
   var duration = parseInt(req.query.duration);  // duration in minutes
-
+  // get values from database, where time is between from and to abd return it as JSON
   if (isNaN(from) || isNaN(duration)) {
       return res.status(400).send('Invalid start time or duration');
   }
 
-  // Calculate the end time (in milliseconds)
   var to = from + duration * 60 * 1000; // Convert duration from minutes to milliseconds
 
   console.log(`Fetching data from ${from} to ${to}`);  // Log start and end time for debugging
