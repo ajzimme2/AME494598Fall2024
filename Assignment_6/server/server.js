@@ -49,12 +49,12 @@ app.get("/getLatest", function (req, res) {
 });
 
 app.get("/getData", function (req, res) {
-  // Get start time and duration from query parameters
   var from = parseInt(req.query.start);
   var duration = parseInt(req.query.duration);
   var to = from + duration * 60 * 1000;
-  
+  console.log(`Fetching data from ${from} to ${to}`);  // Log start and end time for debugging
   // Fetch data from MongoDB
+  
   (async function() {
       let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
       let db = client.db('sensorData');
