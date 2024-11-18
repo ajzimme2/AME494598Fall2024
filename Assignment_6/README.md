@@ -1,5 +1,5 @@
 # graphHistorical Code
-'''
+<code>
 <html>
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
@@ -142,10 +142,10 @@
 
 </body>
 </html>
-'''
+</code>
 
 #Server.js code
-'''
+<code>
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
@@ -262,4 +262,4 @@ app.use(errorHandler());
 
 console.log("Simple static server listening at http://" + hostname + ":" + port);
 app.listen(port);
-'''
+</code>
