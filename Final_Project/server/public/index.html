@@ -1,36 +1,68 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<script src='asyncReq.js'></script>
-<script>
-function getDataFromServer()
-{
-	var url = "./getValue"
-	var callback = function(data){
-		console.log(data, typeof data);
-		var args = data.split(" ");
-		console.log(args);
-		var t = parseFloat(args[0]) * 1.8 + 32;
-		var h = args[1];
-		var time = args[2];
-
-		var output =
-		"<h2> Temperature </h2> <p>" + t + " &deg; F</p>"+
-		"<h2> Humidity </h2> <p>" + h + " %</p>"+
-		"<p> at " + new Date(parseInt(time)) + "</p>";
-
-		document.getElementById("data").innerHTML = output;
-
-	}
-	loadFile(url, callback);
-}
-
-
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Movement Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Connect to the WebSocket
+        const socket = new WebSocket('wss://tejaswigowda.com/quatro/');
 
-<body style='text-align:center; font-family:Helvetica' onload='setInterval("getDataFromServer()", 1000)'>
-	<h1> Weather </h1>
-	<div id='data'></div>
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
+        // Create a 3D object to represent the movement (e.g., a sphere)
+        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Set up the camera position
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle incoming data
+        socket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data); // Assuming data is JSON
+                const { w, x, y, z } = data; // Assuming data contains w, x, y, z coordinates
+
+                // Log the data
+                console.log(data);
+
+                // Update sphere position
+                sphere.position.set(x, y, z);
+            } catch (err) {
+                console.error('Error parsing data:', err);
+            }
+        };
+
+        // Handle WebSocket errors
+        socket.onerror = (error) => {
+            console.error('WebSocket Error:', error);
+        };
+    </script>
 </body>
 </html>
