@@ -29,6 +29,14 @@ const server = app.listen(port, () => {
     console.log("Server running at http://" + hostname + ":" + port);
 });
 
+app.post('/saveData', (req, res) => {
+  const { w, x, y, z } = req.body;
+  console.log('Quaternion Data:', { w, x, y, z });
+
+  // Save to database or log for now
+  res.status(200).send('Data received');
+});
+
 const wss = new WebSocket.Server({ server });
 
 // Simulate sending real-time data (replace this with actual data logic)
