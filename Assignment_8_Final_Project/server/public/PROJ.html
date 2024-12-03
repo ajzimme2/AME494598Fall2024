@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movement Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Initialize the scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add grid and axes
+        const grid = new THREE.GridHelper(100, 100);
+        scene.add(grid);
+        const axes = new THREE.AxesHelper(5);
+        scene.add(axes);
+
+        // Create a golf club-like object (cylinder for shaft, box for head)
+        const shaftGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1.5); // Shaft
+        const headGeometry = new THREE.BoxGeometry(0.2, 0.05, 0.05); // Head of the club
+
+        const shaftMaterial = new THREE.MeshBasicMaterial({ color: 0x555555 }); // Shaft color
+        const headMaterial = new THREE.MeshBasicMaterial({ color: 0x777777 }); // Head color
+
+        const shaft = new THREE.Mesh(shaftGeometry, shaftMaterial);
+        const head = new THREE.Mesh(headGeometry, headMaterial);
+
+        // Position the head at the top of the shaft
+        head.position.y = 0.8; // Adjust position of head
+
+        // Create a group to combine the shaft and head
+        const golfClub = new THREE.Group();
+        golfClub.add(shaft);
+        golfClub.add(head);
+
+        // Add the golf club to the scene
+        scene.add(golfClub);
+
+        // Camera position
+        camera.position.z = 10;
+
+        // Orbit controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // Placeholder for movement data
+        let movementData = [];
+
+        // Function to update the golf club position
+        function updatePosition() {
+            if (movementData.length > 0) {
+                const data = movementData.shift(); // Get the next data point
+                golfClub.position.set(data.x, data.y, data.z); // Update the golf club's position
+            }
+        }
+
+    </script>
+</body>
+</html>

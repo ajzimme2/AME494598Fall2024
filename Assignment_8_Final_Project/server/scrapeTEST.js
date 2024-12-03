@@ -36,5 +36,6 @@ const fetchData = () => {
     });
 };
 
+
 // Set the function to run every second
 setInterval(fetchData, 1000); // 1000 milliseconds = 1 second

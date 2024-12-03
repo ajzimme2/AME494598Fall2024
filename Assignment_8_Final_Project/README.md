@@ -22,7 +22,8 @@ Firstly, it is important that you, the user, has identified a method for serving
 5. From the new page, make sure the instance is selected by checking the box next to the instance name. Then press the connect button, then scroll down and press the connect button again.
 ![Instance_MainPage](Instance_MainPage.JPG)
 6. In the next window that opens, the instance window, begin by pasting in the follwing code and pressing y and enter whenever prompted:
-'''sudo apt-get install gnupg curl
+'''{
+sudo apt-get install gnupg curl
 
 curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
@@ -36,7 +37,8 @@ sudo apt install nodejs npm
 sudo npm install -g forever http-server n
 
 npm install mongodb@3.6
-sudo service mongod start'''
+sudo service mongod start
+}'''
 7. Clone this repository into the instance environment. 
 8. Next head back into the *Instances* window and select the instance, then scroll down and click on the *Security* tab. Click on the link that appears under the **Security Groups** header. 
 ![Security_Page](Security_Page.JPG)
