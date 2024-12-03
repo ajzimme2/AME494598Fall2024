@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Plot</title>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="plot" style="width: 100%; height: 100vh;"></div>
+
+    <script>
+        // Sample data for w, x, y, z over time
+        const w = [1, 2, 3, 4, 5]; // Replace with your w values
+        const x = [5, 4, 3, 2, 1]; // Replace with your x values
+        const y = [2, 3, 4, 5, 6]; // Replace with your y values
+        const z = [1, 2, 2, 3, 4]; // Replace with your z values
+
+        // Create a 3D scatter plot with a solid red line
+        const trace = {
+            x: x, // x-axis data
+            y: y, // y-axis data
+            z: z, // z-axis data
+            mode: 'lines+markers', // Line and marker plot
+            marker: {
+                size: 5, // Marker size
+                color: 'red', // Marker color
+            },
+            line: {
+                color: 'red', // Line color
+                width: 3 // Line thickness
+            },
+            type: 'scatter3d' // 3D scatter plot
+        };
+
+        // Layout configuration
+        const layout = {
+            title: '3D Coordinate Plot',
+            scene: {
+                xaxis: { title: 'W' },
+                yaxis: { title: 'X' },
+                zaxis: { title: 'Y' }
+            },
+            margin: { l: 0, r: 0, b: 0, t: 50 } // Adjust margins
+        };
+
+        // Plot the graph
+        Plotly.newPlot('plot', [trace], layout);
+    </script>
+</body>
+</html>
