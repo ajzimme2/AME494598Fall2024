@@ -92,3 +92,6 @@ No demos were able to be completed for the project due to the inability to get t
 
 ### Accel-Gyro 
 This file set contains my attempts at flashing the quatro, but it is not much to look at.
+
+## AME498 FINAL video
+[FINAL_Video](https://youtu.be/yx2Ro95dyIY)
